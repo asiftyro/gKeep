@@ -114,4 +114,22 @@
 		    app.quit();
 		  }
 		});
-	```    	
+		``` 
+
+
+				
+	7. Test run.
+
+	      ```
+	      > npm start
+	      ```
+
+      		A window will open asking for user credential to login to Google  Accounts to run Keep.
+		
+		  <img src="login-page.png" width="300"  title="Google Accounts Login Screen">
+		
+		  After login:
+		
+		  <img src="keep-running.png" width="300"  title="Google Keep">	
+    
+  	8. Commit changes and push   	
