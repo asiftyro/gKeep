@@ -1,4 +1,4 @@
-# An A-B-C to Electron App making (when you hate to use Google Keep inside browser tab).
+# An A-B-C to Electron App (when you hate to use Google Keep inside browser tab).
 
 
 ## Requirement:
