@@ -1,0 +1,29 @@
+{
+  "name": "gkeep",
+  "version": "1.0.0",
+  "description": "Google Keep, wrapped as an electron app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asiftyro/gKeep.git"
+  },
+  "keywords": [
+    "Google",
+    "Keep",
+    "Electron",
+    "App"
+  ],
+  "author": "Asif R. Porosh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asiftyro/gKeep/issues"
+  },
+  "homepage": "https://github.com/asiftyro/gKeep#readme",
+  "devDependencies": {
+    "electron": "^1.8.4"
+  }
+}
