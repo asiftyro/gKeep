@@ -36,12 +36,12 @@
 
 		Update `package.json` created by npm project initialization.
 		
-      ```javascript
-      "scripts": {
-          "test": "echo \"Error: no test specified\" && exit 1",
-          "start": "electron ."
-      }
-      ```
+	      ```javascript
+	      "scripts": {
+		  "test": "echo \"Error: no test specified\" && exit 1",
+		  "start": "electron ."
+	      }
+	      ```
 
 	3. Install Electron library as dev-dependenct
 	
