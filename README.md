@@ -133,3 +133,95 @@
 		  <img src="keep-running.png" width="300"  title="Google Keep">	
     
   	8. Commit changes and push   	
+
+## Add features:
+
+Store window size and position on exit. Restore and apply on load.
+
+1. Install electron-window-state package
+
+  ```
+    npm i -S electron-window-state
+  ```
+2. Update `index.js`
+
+  `index.js:`
+
+  ```javascript
+  const electron = require('electron');
+  const app = electron.app;
+  const BrowserWindow = electron.BrowserWindow;
+  const windowStateKeeper = require('electron-window-state');
+
+  let mainWindow = null;
+
+  app.on('ready', function () {
+    // Get display monitor/screen size
+    let monitorScreenSize = electron.screen.getPrimaryDisplay().size;
+
+    // Load the previous state with fallback to default(sized down to 80% of display monitor/screen size)
+    let mainWindowState = windowStateKeeper({
+      defaultWidth: monitorScreenSize.width * .8,
+      defaultHeight: monitorScreenSize.height * .8,
+    });
+
+    // Create a window using the state information
+    mainWindow = new BrowserWindow({
+      'x': mainWindowState.x,
+      'y': mainWindowState.y,
+      'width': mainWindowState.width,
+      'height': mainWindowState.height
+    });
+
+    // Register listeners for window size, position change logging
+    mainWindowState.manage(mainWindow);
+
+    // Load google keep from URL in the above window
+    mainWindow.loadURL('https://keep.google.com');
+
+    // Destroy windown when closed
+    mainWindow.on('closed', function () {
+      mainWindow = null;
+    });
+  });
+
+  // Quit App when all windows are closed.
+  app.on('window-all-closed', function () {
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform != 'darwin') {
+      app.quit();
+    }
+  });
+  ```
+
+3. Test run.
+
+      ```
+      > npm start
+      ```
+
+## Packaging and Distribution
+
+- electron-packager will be used for packaging
+- electron-icon-maker will be used to make native icon file from png
+
+```
+npm i electron-packager electron-icon-maker -g
+```
+
+### Convert png file to native icon format:
+
+```
+electron-icon-maker -i=keep-icon.png
+```
+
+Converted Icons will be in icons directory.
+
+### Package
+
+```
+electron-packager . --overwrite --icon icons/mac/icon.icns --out dist
+```
+
+Package will be created under dist directory.
