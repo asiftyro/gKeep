@@ -1,5 +1,4 @@
-# An A-B-C to Electron App making (when you hate to use Google Keep inside browser tab).
-
+# An A-B-C to Electron App (when you hate to use Google Keep inside browser tab).
 
 ## Requirement:
 
@@ -38,15 +37,15 @@
 		
 	      ```javascript
 	      "scripts": {
-		  "test": "echo \"Error: no test specified\" && exit 1",
-		  "start": "electron ."
+		    "test": "echo \"Error: no test specified\" && exit 1",
+		    "start": "electron ."
 	      }
 	      ```
 
-	3. Install Electron library as dev-dependenct
+	3. Install Electron library as dev-dependency
 	
 		```
-		npm i -D electron
+		> npm i -D electron
 		```
     
     4. Create README
@@ -54,9 +53,7 @@
 	    ```
 	    > touch README.md
 	    ```
-	
-
-	
+		
 	5. Initialize local git repo.
 	
 	    ```
@@ -124,7 +121,7 @@
 	      > npm start
 	      ```
 
-      		A window will open asking for user credential to login to Google  Accounts to run Keep.
+      	A window will open asking for user credential to login to Google  Accounts to run Keep.
 		
 		  <img src="login-page.png" width="300"  title="Google Accounts Login Screen">
 		
@@ -136,12 +133,16 @@
 
 ## Add features:
 
-Store window size and position on exit. Restore and apply on load.
+
+- Store window size and position on exit. Restore and apply on load.
+- Enable Edit menu (Undo/Redo/Cut/Copy/Paste)
+
+#### Store window size and position on exit. Restore and apply on load.
 
 1. Install electron-window-state package
 
   ```
-    npm i -S electron-window-state
+    > npm i -S electron-window-state
   ```
 2. Update `index.js`
 
@@ -201,19 +202,54 @@ Store window size and position on exit. Restore and apply on load.
       > npm start
       ```
 
+#### Enable Edit menu (Undo/Redo/Cut/Copy/Paste)
+
+1. Add menu template
+
+    ```javascript
+    const menuTemplate = [{
+      label: "gKeep",
+      submenu: [{
+        label: "Quit", accelerator: "Command+Q", click: function () {
+          app.quit();
+        }
+      }]
+    }, {
+      label: "Edit",
+      submenu: [
+        { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+        { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+        { type: "separator" },
+        { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+        { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+        { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+        { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+      ]
+    }];
+    ```
+
+2. Build and load the menu on when app is in ready state.
+
+
+  ```javascript
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+  ```
+
+
+
 ## Packaging and Distribution
 
 - electron-packager will be used for packaging
 - electron-icon-maker will be used to make native icon file from png
 
 ```
-npm i electron-packager electron-icon-maker -g
+> npm i electron-packager electron-icon-maker -g
 ```
 
 ### Convert png file to native icon format:
 
 ```
-electron-icon-maker -i=keep-icon.png
+> electron-icon-maker -i=keep-icon.png
 ```
 
 Converted Icons will be in icons directory.
@@ -221,7 +257,7 @@ Converted Icons will be in icons directory.
 ### Package
 
 ```
-electron-packager . --overwrite --icon icons/mac/icon.icns --out dist
+> electron-packager . --overwrite --icon icons/mac/icon.icns --out dist
 ```
 
 Package will be created under dist directory.

@@ -2,8 +2,29 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const windowStateKeeper = require('electron-window-state');
+const Menu = electron.Menu;
 
 let mainWindow = null;
+
+const menuTemplate = [{
+  label: "gKeep",
+  submenu: [{
+    label: "Quit", accelerator: "Command+Q", click: function () {
+      app.quit();
+    }
+  }]
+}, {
+  label: "Edit",
+  submenu: [
+    { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
+    { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
+    { type: "separator" },
+    { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+    { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+    { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
+    { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+  ]
+}];
 
 app.on('ready', function () {
   // Get display monitor/screen size
@@ -29,6 +50,8 @@ app.on('ready', function () {
   // Load google keep from URL in the above window
   mainWindow.loadURL('https://keep.google.com');
 
+  Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
+
   // Destroy windown when closed
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -43,11 +66,3 @@ app.on('window-all-closed', function () {
     app.quit();
   }
 });
-
-
-
-
-
-
-
-
